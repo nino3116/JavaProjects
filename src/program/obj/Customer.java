@@ -8,7 +8,7 @@ public class Customer {
 	String email;
 	int birthYear;
 	
-	// 생성자, 생략하면 (기본 생성자 -> Customer(){};) 
+	// 생성자, 생략하면 (기본 생성자 -> Customer(){};)  생성자는 자기 자신이니 반환타입이 없다!
 	public Customer() {}
 	public Customer(String name, String gender, String email, int birthYear) {
 		this.name = name;
