@@ -15,6 +15,10 @@ public class Employee extends Person {
 		this.department = department; // 부모클래스에 없는 애를 정의하는 방법
 	}
 	
+	public void working() {
+		System.out.println(name + "가 일을 합니다.");
+	}
+	
 	@Override
 	public String info() {
 		// TODO Auto-generated method stub
