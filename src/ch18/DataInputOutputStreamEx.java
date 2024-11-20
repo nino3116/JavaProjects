@@ -22,7 +22,7 @@ public class DataInputOutputStreamEx {
       dos.writeDouble(95.6);
       dos.writeInt(1);
       
-      dos.writeUTF("김갑순");
+      dos.writeUTF("김갑순"); 
       dos.writeDouble(90.2);
       dos.writeInt(2);
       
@@ -40,6 +40,7 @@ public class DataInputOutputStreamEx {
          double score = dis.readDouble();
          int order = dis.readInt();
          System.out.println(name + " : " + score + " : " + order);
+         
       }
       dis.close();
       fis.close();
