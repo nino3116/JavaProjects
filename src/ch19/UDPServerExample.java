@@ -58,7 +58,7 @@ public class UDPServerExample extends Thread {
 	                              receivePacket.getLength(),
 	                              "UTF-8");
 	                  
-	                  // 3. 클라이언트의 IP와 Port 주소 얻기
+	                  // 3. 클라이언트의 IP와 Port 주소 얻기(*중요*)
 	                  SocketAddress socketAddress = receivePacket.getSocketAddress();
 	                  
 	                  // 4. 데이터 처리...
