@@ -51,7 +51,7 @@ public class ArrayExample2 {
 		
 		for (int i = 0; i < arr2.length; i++) {
 			for (int j = 0; j < arr2[i].length; j++) { // arr2[i].length 각요소 별 길이...
-				System.out.print(arr2[i][j] +" ");
+				System.out.print(arr2[i][j]+" " );
 			}
 			System.out.println(); // 줄 바꿈 
 		}
@@ -61,7 +61,7 @@ public class ArrayExample2 {
 		for (int i = 0; i < arr3.length; i++) {
 			for (int j = 0; j < arr3[i].length; j++) {
 				for (int k = 0; k < arr3[i][j].length; k++) {
-					System.out.print(arr3[i][j][k]+ " ");
+					System.out.print(arr3[i][j][k]+" ");
 				}
 			}
 		}

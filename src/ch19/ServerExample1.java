@@ -87,6 +87,7 @@ public class ServerExample1 {
 //						os.write(bytes);
 //						os.flush();
 						System.out.println("[서버] 받은 데이터를 다시 보냄 : " + message);
+						
 						// 4. 연결 끊기
 						socket.close();
 						System.out.println("[서버] " + isa.getHostName() + "의 연결을 끊음");
