@@ -2,6 +2,7 @@ package database.persons;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +21,7 @@ public class PersonsDAO {
 	// 데이터 접속을 위한 객체
 	Connection conn = null; // DB연결 객체
 	Statement stmt = null; // SQL 처리를 위한 객체
+	PreparedStatement pstmt = null;
 	ResultSet rs = null; // DB로부터 받은 레코드 정보를 처리
 
 	// 싱글톤 1단계 = 자기 자신을 생성하는 객체 멤버 
@@ -57,16 +59,30 @@ public class PersonsDAO {
 
 		// 구현..
 		try {
-			// 3. Statement 객체 생성
-			stmt = conn.createStatement();
-			// 4. SQL 작성
-			String sql = "INSERT INTO persons (firstname, lastname, age, city)" + "values('" + vo.getFirstname() + "','"
-					+ vo.getLastname() + "'," + "," + vo.getAge() + ", '" + vo.getCity() + "')";
-			String sql2 = String.format(
-					"INSERT INTO persons (firstname, lastname, age, city)" + "VALUES('%s', '%s', %d, '%s')",
-					vo.getFirstname(), vo.getLastname(), vo.getAge(), vo.getCity());
+//			// 3. Statement 객체 생성
+//			stmt = conn.createStatement();
+//			// 4. SQL 작성
+//			String sql = "INSERT INTO persons (firstname, lastname, age, city)" + "values('" + vo.getFirstname() + "','"
+//					+ vo.getLastname() + "'," + "," + vo.getAge() + ", '" + vo.getCity() + "')";
+//			String sql2 = String.format(
+//					"INSERT INTO persons (firstname, lastname, age, city)" + "VALUES('%s', '%s', %d, '%s')",
+//					vo.getFirstname(), vo.getLastname(), vo.getAge(), vo.getCity());
+//			result = stmt.executeUpdate(sql2);
+			
+			// PreparedStatement 사용ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+			// 1) SQL문 작성
+			String sql ="insert into persons (lastname, firstname, age, city)"
+					+ "values(?,?,?,?)";
+			// 2) PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// 3) pstmt에 ? 에 들어갈 값을지정. 첫번째 ? 는 1번부터
+			pstmt.setString(1, vo.getLastname());
+			pstmt.setString(2, vo.getFirstname());
+			pstmt.setInt(3, vo.getAge());
+			pstmt.setString(4, vo.getCity());
+			// 4) pstmt 실행
+			result = pstmt.executeUpdate();
 			// 5. SQL 실행
-			result = stmt.executeUpdate(sql2);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -80,12 +96,9 @@ public class PersonsDAO {
 		// 리스트 객체 생성
 		List<PersonsVO> list = new ArrayList<>();
 		try {
-			// 3. stmt 객체 생성
-			stmt = conn.createStatement();
-			// 4. sql 작성
 			String sql = "select * from persons";
-			// 5. SQL 실행 - > executeQuery()
-			rs = stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 			// ResultSet 처리...
 			while (rs.next()) {		// next() boolean타입으로 값이 있으면 ture, 없으면 false
 //				PersonsVO vo = new PersonsVO();
@@ -116,13 +129,19 @@ public class PersonsDAO {
 		List<PersonsVO> list = new ArrayList<>();
 		
 		try {
-			// 3. stmt 객체 생성
-			stmt = conn.createStatement();
-			// 4. sql 작성
-			String sql = "select * from persons "
-			+ "where firstname like '%"+firstname+"%'";
-			// 5. SQL 실행 - > executeQuery()
-			rs = stmt.executeQuery(sql);
+//			// 3. stmt 객체 생성
+//			stmt = conn.createStatement();
+//			// 4. sql 작성
+//			String sql = "select * from persons "
+//			+ "where firstname like '%"+firstname+"%'";
+//			// 5. SQL 실행 - > executeQuery()
+//			rs = stmt.executeQuery(sql);
+			
+			// PreparedStatement 로 변경
+			String sql = "select * from persons where firstname like ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+firstname+"%");
+			rs = pstmt.executeQuery();
 			// ResultSet 처리...
 			while (rs.next()) {		// next() boolean타입으로 값이 있으면 ture, 없으면 false
 				PersonsVO vo = new PersonsVO(
